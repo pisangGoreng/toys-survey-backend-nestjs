@@ -12,7 +12,7 @@ const isEnable = ['dev', 'dev-local'].includes(process.env.NODE_ENV);
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'mysql',
+      type: process.env.DB_TYPE as any,
       host: process.env.DB_HOST,
       port: Number(process.env.DB_PORT),
       username: process.env.DB_USERNAME,

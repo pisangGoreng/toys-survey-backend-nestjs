@@ -8,6 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
       signOptions: { expiresIn: process.env.JWT_EXPIRED },
     }),
   ],
+
   exports: [JwtModule],
 })
 export class CommonModule {}

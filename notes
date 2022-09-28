@@ -1,0 +1,10 @@
+- use env in jest
+  https://dev.to/chukwutosin_/using-environment-variables-when-testing-with-jest-in-nodejs-124d
+
+- make jest can import the module
+  "moduleNameMapper": {
+  "^src/(.\*)$": "<rootDir>/$1"
+  },
+
+- make jest can import the entity
+  entities: [__dirname + '/../**/*.entity.ts'],
