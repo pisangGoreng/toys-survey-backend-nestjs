@@ -46,10 +46,10 @@ describe('User API', () => {
       .post('/users')
       .send({
         full_name: 'user test',
-        nik: '7',
+        nik: '9',
         image_url:
           'https://drive.google.com/file/d/1sk8_yjGyQ9paDoycT_KGY6-zpf0N33QW/view?usp=sharing',
-        email: 'user_test7@gmail.com',
+        email: 'user_test9@gmail.com',
         password: 'Kenzo007',
         store: 1,
         role: 1,
@@ -61,7 +61,8 @@ describe('User API', () => {
     expect(testUser.id).toEqual(user.id);
   });
 
-  it(`/GET/:id - Success get a new user created before, a user id with id: ${testUser.id}`, async () => {
+  it(`/GET/:id - Success get a new user created before`, async () => {
+    // , a user id with id: ${testUser.id}
     const { body } = await request(app.getHttpServer())
       .get(`/users/${testUser.id}`)
       .expect(200);
@@ -79,13 +80,14 @@ describe('User API', () => {
   });
 
   it(`/PUT - Success update full_name a new test user `, async () => {
+    const newName = { full_name: 'endy' };
     await request(app.getHttpServer())
       .put(`/users/${testUser.id}`)
-      .send({ full_name: 'endy' })
+      .send(newName)
       .expect(200);
 
     const [user] = await userService.findOne({ id: testUser.id });
-    expect(user.full_name).toEqual(testUser.full_name);
+    expect(user.full_name).toEqual(newName.full_name);
   });
 
   it(`/DELETE - Success delete new test user `, async () => {
