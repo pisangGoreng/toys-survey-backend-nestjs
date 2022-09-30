@@ -6,6 +6,7 @@ import { UserModule } from './user/user.module';
 import { StoreModule } from './store/store.module';
 import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
+import { EmployeeModule } from './employee/employee.module';
 
 const isEnable = ['dev', 'dev-local'].includes(process.env.NODE_ENV);
 
@@ -29,6 +30,7 @@ const isEnable = ['dev', 'dev-local'].includes(process.env.NODE_ENV);
     StoreModule,
     AuthModule,
     CommonModule,
+    EmployeeModule,
   ],
 })
 export class AppModule {}

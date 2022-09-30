@@ -9,6 +9,7 @@ import { Repository } from 'typeorm';
 
 describe('User API', () => {
   let app: INestApplication;
+  const urlPath = '/users';
 
   let userService: UserService;
   let repository: Repository<User>;
@@ -43,7 +44,7 @@ describe('User API', () => {
 
   it('/POST - Success create a new user', async () => {
     const { body } = await request(app.getHttpServer())
-      .post('/users')
+      .post(urlPath)
       .send({
         full_name: 'user test',
         nik: '9',
@@ -64,7 +65,7 @@ describe('User API', () => {
   it(`/GET/:id - Success get a new user created before`, async () => {
     // , a user id with id: ${testUser.id}
     const { body } = await request(app.getHttpServer())
-      .get(`/users/${testUser.id}`)
+      .get(`${urlPath}/${testUser.id}`)
       .expect(200);
 
     expect(testUser.id).toEqual(body.id);
@@ -72,7 +73,7 @@ describe('User API', () => {
 
   it(`/GET - Success get all the user & contain a new test user `, async () => {
     const { body } = await request(app.getHttpServer())
-      .get('/users')
+      .get(urlPath)
       .expect(200);
     const [selectedUser] = body.filter((user) => user.id === testUser.id);
 
@@ -82,7 +83,7 @@ describe('User API', () => {
   it(`/PUT - Success update full_name a new test user `, async () => {
     const newName = { full_name: 'endy' };
     await request(app.getHttpServer())
-      .put(`/users/${testUser.id}`)
+      .put(`${urlPath}/${testUser.id}`)
       .send(newName)
       .expect(200);
 
@@ -91,7 +92,7 @@ describe('User API', () => {
   });
 
   it(`/DELETE - Success delete new test user `, async () => {
-    await request(app.getHttpServer()).delete(`/users/${testUser.id}`);
+    await request(app.getHttpServer()).delete(`${urlPath}/${testUser.id}`);
 
     const [user] = await userService.findOne({ id: testUser.id });
     expect(user).toEqual(null);
