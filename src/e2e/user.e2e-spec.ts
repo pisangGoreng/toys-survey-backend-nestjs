@@ -1,10 +1,10 @@
 import * as request from 'supertest';
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserModule } from './user.module';
-import { UserService } from './user.service';
+import { UserModule } from '../user/user.module';
+import { UserService } from '../user/user.service';
 import { INestApplication } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './models/user.entity';
+import { User } from '../user/models/user.entity';
 import { Repository } from 'typeorm';
 
 describe('User API', () => {
@@ -46,11 +46,7 @@ describe('User API', () => {
     const { body } = await request(app.getHttpServer())
       .post(urlPath)
       .send({
-        full_name: 'user test',
-        nik: '9',
-        image_url:
-          'https://drive.google.com/file/d/1sk8_yjGyQ9paDoycT_KGY6-zpf0N33QW/view?usp=sharing',
-        email: 'user_test9@gmail.com',
+        email: 'mgrtoys1234.palemsemi@toyskingdom.co.id',
         password: 'Kenzo007',
         store: 1,
         role: 1,
@@ -81,14 +77,16 @@ describe('User API', () => {
   });
 
   it(`/PUT - Success update full_name a new test user `, async () => {
-    const newName = { full_name: 'endy' };
+    const newEmail = {
+      email: 'mgrtoys777.palemsemi@toyskingdom.co.id',
+    };
     await request(app.getHttpServer())
       .put(`${urlPath}/${testUser.id}`)
-      .send(newName)
+      .send(newEmail)
       .expect(200);
 
     const [user] = await userService.findOne({ id: testUser.id });
-    expect(user.full_name).toEqual(newName.full_name);
+    expect(user.email).toEqual(newEmail.email);
   });
 
   it(`/DELETE - Success delete new test user `, async () => {

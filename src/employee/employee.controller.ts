@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
@@ -9,11 +10,13 @@ import {
   Param,
   Post,
   Put,
+  UseInterceptors,
 } from '@nestjs/common';
 import { EmployeeService } from './employee.service';
 import { EmployeeCreateDto } from './models/employee-create.dto';
 import { EmployeeUpdateDto } from './models/employee-update.dto';
 
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller('employees')
 export class EmployeeController {
   constructor(private employeeService: EmployeeService) {}

@@ -10,14 +10,15 @@ import {
 } from 'typeorm';
 
 import { User } from 'src/user/models/user.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity('employees')
-// @Unique(['nik'])
+@Unique(['nik'])
 export class Employee {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true })
+  @Column()
   nik: string;
 
   @Column({ nullable: true })
@@ -30,9 +31,11 @@ export class Employee {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
+  @Exclude()
   @CreateDateColumn()
   created_at: Date;
 
+  @Exclude()
   @UpdateDateColumn()
   updated_at: Date;
 }

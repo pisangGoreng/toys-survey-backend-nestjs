@@ -39,9 +39,17 @@ export class UserRepository extends AbstractRepository {
     try {
       results[0] = await this.userRepository
         .createQueryBuilder('user')
+        .leftJoinAndSelect('user.employee', 'employee')
         .leftJoinAndSelect('user.role', 'role')
         .leftJoinAndSelect('user.store', 'store')
-        .select(['user', 'role.id', 'role.name', 'store.location'])
+        .select([
+          'user',
+          'role.id',
+          'role.name',
+          'store.location',
+          'store.address',
+          'employee',
+        ])
         .getMany();
     } catch (error) {
       console.error(error);

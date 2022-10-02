@@ -10,18 +10,6 @@ import {
 
 export class UserCreateDto {
   @IsNotEmpty()
-  @IsString()
-  @MinLength(4, { message: 'Name must be at least 4 characters' })
-  full_name: string;
-
-  @IsNotEmpty()
-  @IsString()
-  nik: string;
-
-  @IsString()
-  image_url: string;
-
-  @IsNotEmpty()
   @IsEmail()
   email: string;
 

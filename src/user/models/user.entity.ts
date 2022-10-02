@@ -7,25 +7,18 @@ import {
   Unique,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { Role } from 'src/role/models/role.entity';
 import { Store } from 'src/store/models/store.entity';
+import { Employee } from 'src/employee/models/employee.entity';
 
 @Entity('users')
-@Unique(['email', 'nik'])
+@Unique(['email'])
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column()
-  full_name: string;
-
-  @Column({ unique: true })
-  nik: string;
-
-  @Column()
-  image_url: string;
 
   @Column({ unique: true })
   email: string;
@@ -42,9 +35,14 @@ export class User {
   @JoinColumn({ name: 'role_id' })
   role: Role;
 
+  @OneToMany(() => Employee, (employee) => employee.user)
+  employee: Employee[];
+
+  @Exclude()
   @CreateDateColumn()
   created_at: Date;
 
+  @Exclude()
   @UpdateDateColumn()
   updated_at: Date;
 }

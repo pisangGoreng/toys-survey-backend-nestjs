@@ -3,9 +3,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { EmployeeService } from './employee.service';
-import { EmployeeModule } from './employee.module';
-import { Employee } from './models/employee.entity';
+import { EmployeeService } from '../employee/employee.service';
+import { EmployeeModule } from '../employee/employee.module';
+import { Employee } from '../employee/models/employee.entity';
 
 describe('Employee API', () => {
   let app: INestApplication;
@@ -55,8 +55,8 @@ describe('Employee API', () => {
       .expect(201);
     testEmployee = body;
 
-    const [user] = await employeeService.findOne({ id: testEmployee.id });
-    expect(testEmployee.id).toEqual(user.id);
+    const [employee] = await employeeService.findOne({ id: testEmployee.id });
+    expect(testEmployee.id).toEqual(employee.id);
   });
 
   it(`/GET/:id - Success get a new employee created before`, async () => {
@@ -71,9 +71,11 @@ describe('Employee API', () => {
     const { body } = await request(app.getHttpServer())
       .get(urlPath)
       .expect(200);
-    const [selectedUser] = body.filter((user) => user.id === testEmployee.id);
+    const [selectedEmployee] = body.filter(
+      (employee) => employee.id === testEmployee.id,
+    );
 
-    expect(selectedUser.id).toEqual(testEmployee.id);
+    expect(selectedEmployee.id).toEqual(testEmployee.id);
   });
 
   it(`/PUT - Success update full_name a new test employee `, async () => {
@@ -83,14 +85,14 @@ describe('Employee API', () => {
       .send(newName)
       .expect(200);
 
-    const [user] = await employeeService.findOne({ id: testEmployee.id });
-    expect(user.full_name).toEqual(newName.full_name);
+    const [employee] = await employeeService.findOne({ id: testEmployee.id });
+    expect(employee.full_name).toEqual(newName.full_name);
   });
 
   it(`/DELETE - Success delete new test employee `, async () => {
     await request(app.getHttpServer()).delete(`${urlPath}/${testEmployee.id}`);
 
-    const [user] = await employeeService.findOne({ id: testEmployee.id });
-    expect(user).toEqual(null);
+    const [employee] = await employeeService.findOne({ id: testEmployee.id });
+    expect(employee).toEqual(null);
   });
 });
