@@ -72,7 +72,11 @@ export abstract class AbstractRepository {
     const results = [null, null];
 
     try {
-      results[0] = await this.repository.save(data);
+      results[0] = await this.repository.save({
+        ...data,
+        created_at: new Date(),
+        update_at: new Date(),
+      });
     } catch (error) {
       console.error(error);
       results[1] = error.driverError.sqlMessage;
@@ -85,7 +89,10 @@ export abstract class AbstractRepository {
     const results = [null, null];
 
     try {
-      results[0] = await this.repository.update(id, data);
+      results[0] = await this.repository.update(id, {
+        ...data,
+        update_at: new Date(),
+      });
     } catch (error) {
       results[1] = error.driverError.sqlMessage;
     }

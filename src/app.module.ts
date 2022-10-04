@@ -7,6 +7,8 @@ import { StoreModule } from './store/store.module';
 import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
 import { EmployeeModule } from './employee/employee.module';
+import { ReceiptModule } from './receipt/receipt.module';
+import { MailModule } from './mail/mail.module';
 
 const isEnable = ['dev', 'dev-local'].includes(process.env.NODE_ENV);
 
@@ -22,7 +24,7 @@ const isEnable = ['dev', 'dev-local'].includes(process.env.NODE_ENV);
       autoLoadEntities: isEnable,
       // synchronize: isEnable,
       entities: [],
-      logging: isEnable,
+      // logging: isEnable,
     }),
     PermissionModule,
     RoleModule,
@@ -31,6 +33,8 @@ const isEnable = ['dev', 'dev-local'].includes(process.env.NODE_ENV);
     AuthModule,
     CommonModule,
     EmployeeModule,
+    ReceiptModule,
+    MailModule,
   ],
 })
 export class AppModule {}
