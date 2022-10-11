@@ -69,9 +69,10 @@ export class UserController {
       id,
       body,
     );
+
     if (updatedUserErr) throw new BadRequestException(updatedUserErr);
 
-    return updatedUser;
+    return [updatedUser, updatedUserErr];
   }
 
   @Delete(':id')

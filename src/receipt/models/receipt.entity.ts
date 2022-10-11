@@ -24,13 +24,11 @@ export class Receipt {
   @Column()
   rating: number;
 
-  @OneToOne(() => User)
-  @JoinColumn({ name: 'user_id' })
-  user: User;
+  @Column()
+  user_id: number;
 
-  @OneToOne(() => Employee)
-  @JoinColumn({ name: 'employee_id' })
-  employee: Employee;
+  @Column()
+  employee_id: number;
 
   @CreateDateColumn()
   created_at: Date;
@@ -38,4 +36,13 @@ export class Receipt {
   @Exclude()
   @UpdateDateColumn()
   updated_at: Date;
+
+  // * RELATION
+  @OneToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
+
+  @OneToOne(() => Employee)
+  @JoinColumn({ name: 'employee_id' })
+  employee: Employee;
 }

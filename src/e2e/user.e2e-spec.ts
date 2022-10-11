@@ -59,7 +59,6 @@ describe('User API', () => {
   });
 
   it(`/GET/:id - Success get a new user created before`, async () => {
-    // , a user id with id: ${testUser.id}
     const { body } = await request(app.getHttpServer())
       .get(`${urlPath}/${testUser.id}`)
       .expect(200);

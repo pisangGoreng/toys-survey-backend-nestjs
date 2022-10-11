@@ -30,16 +30,16 @@ export class Role {
   @OneToMany(() => User, (user) => user.role)
   user: User[];
 
-  // @ManyToMany(() => Permission, { cascade: true })
-  // /*
-  //   @JoinTable otomatis membuat table junction nya
-  //   role_permissions
-  //   role_id | permission_id
-  // */
-  // @JoinTable({
-  //   name: 'role_permissions',
-  //   joinColumn: { name: 'role_id', referencedColumnName: 'id' },
-  //   inverseJoinColumn: { name: 'permission_id', referencedColumnName: 'id' },
-  // })
-  // permissions: Permission[];
+  @ManyToMany(() => Permission, { cascade: true })
+  /*
+    @JoinTable otomatis membuat table junction nya
+    role_permissions
+    role_id | permission_id
+  */
+  @JoinTable({
+    name: 'role_permissions',
+    joinColumn: { name: 'role_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'permission_id', referencedColumnName: 'id' },
+  })
+  permissions: Permission[];
 }

@@ -15,6 +15,24 @@ export class ReceiptRepository extends AbstractRepository {
     super(receiptRepository, connection);
   }
 
+  async create(data): Promise<any[]> {
+    const results = [null, null];
+
+    try {
+      console.log('cek REPO NYA BOS', data);
+      results[0] = await this.receiptRepository.save({
+        ...data,
+        created_at: new Date(),
+        update_at: new Date(),
+      });
+    } catch (error) {
+      console.error(error);
+      results[1] = error.driverError.sqlMessage;
+    }
+
+    return results;
+  }
+
   async all(): Promise<any[]> {
     const results = [null, null];
 

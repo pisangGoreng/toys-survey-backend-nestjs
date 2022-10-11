@@ -43,6 +43,12 @@ export class ReceiptController {
     });
     if (receiptsErr) throw new BadRequestException(receiptsErr);
 
+    receipts.map((receipt) => {
+      console.log(receipt.id);
+      console.log(receipt.employee.full_name);
+      console.log('');
+    });
+
     return {
       store_id,
       month,

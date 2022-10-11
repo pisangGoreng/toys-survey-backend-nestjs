@@ -3,18 +3,17 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { EmployeeService } from '../employee/employee.service';
-import { EmployeeModule } from '../employee/employee.module';
-import { Employee } from '../employee/models/employee.entity';
+
+import { Store } from 'src/store/models/store.entity';
 import { StoreService } from '../store/store.service';
 import { StoreModule } from '../store/store.module';
 
-describe('Employee API', () => {
+describe('Store API', () => {
   let app: INestApplication;
   const urlPath = '/stores';
 
   let storeService: StoreService;
-  let repository: Repository<Employee>;
+  let repository: Repository<Store>;
   let testStore = null;
 
   beforeAll(async () => {

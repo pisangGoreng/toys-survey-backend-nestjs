@@ -1,4 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { MailerService } from '@nestjs-modules/mailer';
+import * as Excel from 'exceljs';
+
 import { ReceiptRepository } from './receipt.repository';
 import * as moment from 'moment';
 import { getMonthName, getMonthNumber } from 'src/helpers/date';
@@ -9,10 +12,6 @@ export class ReceiptService {
 
   async findAll(): Promise<any> {
     return this.receiptRepository.all();
-  }
-
-  async findOne(condition, relations: any[] = []): Promise<any[]> {
-    return await this.receiptRepository.findOne(condition, relations);
   }
 
   async findAllByDate(condition): Promise<any[]> {
@@ -46,19 +45,35 @@ export class ReceiptService {
     });
   }
 
-  async paginate(page = 1, relations: any[] = []): Promise<any[]> {
-    return await this.receiptRepository.paginate(page, relations);
-  }
-
   async create(data): Promise<any> {
     return this.receiptRepository.create(data);
   }
 
-  async update(id: number, data): Promise<any> {
-    return this.receiptRepository.update(id, data);
-  }
+  async transformReceiptsToExcel({ receipts }) {
+    const workbook = new Excel.Workbook();
+    const worksheet = workbook.addWorksheet('sheet 1');
+    worksheet.columns = [
+      { header: 'No', key: 'no' },
+      { header: 'Date', key: 'date' },
+      { header: 'No Receipt', key: 'noReceipt' },
+      { header: 'Name', key: 'name' },
+      { header: 'nik', key: 'nik' },
+      { header: 'rating', key: 'rating' },
+    ];
 
-  async delete(id: number): Promise<any> {
-    return this.receiptRepository.delete(id);
+    const rows = receipts.map((receipt, index) => {
+      const { created_at, receipt_no, employee, rating } = receipt;
+      return {
+        no: index + 1,
+        date: moment(created_at).format('DD-MM-YYYY'),
+        noReceipt: receipt_no,
+        name: employee.full_name,
+        nik: employee.nik,
+        rating,
+      };
+    });
+
+    rows.forEach((row) => worksheet.addRow(row));
+    return await workbook.xlsx.writeBuffer();
   }
 }

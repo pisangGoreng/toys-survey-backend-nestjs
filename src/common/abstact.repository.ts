@@ -61,6 +61,7 @@ export abstract class AbstractRepository {
         },
       };
     } catch (error) {
+      console.error(error);
       results[1] = error.driverError.sqlMessage;
     }
 
@@ -91,9 +92,10 @@ export abstract class AbstractRepository {
     try {
       results[0] = await this.repository.update(id, {
         ...data,
-        update_at: new Date(),
+        updated_at: new Date(),
       });
     } catch (error) {
+      console.error(error);
       results[1] = error.driverError.sqlMessage;
     }
 
