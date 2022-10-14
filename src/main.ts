@@ -7,9 +7,11 @@ import { WrapResponseInterceptor } from './common/interceptors/wrap-response.int
 import { TimeoutInterceptor } from './common/interceptors/timeout.interceptor';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
 
-  app.enableCors();
+  app.enableCors({
+    origin: ['http://localhost:8080/'],
+  });
   app.useGlobalInterceptors(
     new WrapResponseInterceptor(),
     new TimeoutInterceptor(),
