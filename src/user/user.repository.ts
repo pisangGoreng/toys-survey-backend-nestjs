@@ -46,6 +46,7 @@ export class UserRepository extends AbstractRepository {
           'user',
           'role.id',
           'role.name',
+          'store.id',
           'store.location',
           'store.address',
           'employee',
